@@ -133,6 +133,6 @@ class TopData:
 
 td = TopData()
 print(td.getTopInsuranceData())
-# td.getTopTransactionData()
-# td.getTopUserData()
+td.getTopTransactionData()
+td.getTopUserData()
 
