@@ -155,9 +155,9 @@ if selectRB == "Device Dominance":
     col1,col2= st.columns([3,1])
     with col1:
         st.subheader("Device Dominance and User Engagement Analysis")
-        td = DeviceDominance()
+        dd = DeviceDominance()
         if st.checkbox("Show total users By Brand wise"):
-            df = td.getTotalUserCountByBrand()
+            df = dd.getTotalUserCountByBrand()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -172,7 +172,7 @@ if selectRB == "Device Dominance":
             st.pyplot(fig)
 
         if st.checkbox("Top level Brands used"):
-            df = td.getTopTenBrandUsed()
+            df = dd.getTopTenBrandUsed()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -188,13 +188,13 @@ if selectRB == "Device Dominance":
 
         if st.checkbox("Show Top Three Brands By Each State"):
             st.subheader("Top Three Brands By Each State")
-            df = td.getTopThreeBrandsByState()
+            df = dd.getTopThreeBrandsByState()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
 
         if st.checkbox("Average Users By Brand level"):
-            df = td.getAvgUserPercentageByBrand()
+            df = dd.getAvgUserPercentageByBrand()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -210,7 +210,7 @@ if selectRB == "Device Dominance":
         
 
         if st.checkbox("Total Registered User By State wise"):
-            df = td.getTotalUserCountByState()
+            df = dd.getTotalUserCountByState()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -224,7 +224,7 @@ if selectRB == "Device Dominance":
             ax.invert_yaxis()
             st.pyplot(fig)
         if st.checkbox("Average User Percentage By State level"):
-            df = td.getUserPercentageByState()
+            df = dd.getUserPercentageByState()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)    
@@ -232,9 +232,9 @@ if selectRB == "Insurance Penetration":
     col1,col2= st.columns([3,1])
     with col1:
         st.subheader("Insurance Penetration and Growth Potential Analysis")
-        td = InsurancePenetration()
+        ip = InsurancePenetration()
         if st.checkbox("Show total Insurance transactions By State level"):
-            df = td.getTotalTransactionsByState()
+            df = ip.getTotalTransactionsByState()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -248,7 +248,7 @@ if selectRB == "Insurance Penetration":
             ax.invert_yaxis()
             st.pyplot(fig)
         if st.checkbox("Show total Insurance Amount By State level"):
-            df = td.getTotalAmountByState()
+            df = ip.getTotalAmountByState()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -263,20 +263,20 @@ if selectRB == "Insurance Penetration":
             st.pyplot(fig)
 
         if st.checkbox("Show Insurance Transactions for Quarter"):
-            df = td.getTotalTransactionsByQuarter()
+            df = ip.getTotalTransactionsByQuarter()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
 
         if st.checkbox("Show Insurance Amount for Quarter"):
-            df = td.getTotalAmountByQuarter()
+            df = ip.getTotalAmountByQuarter()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
 
     with col2:
         if st.checkbox("Total Transactions vs Year"):
-            df = td.getTotalTransactionsByYear()
+            df = ip.getTotalTransactionsByYear()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -296,7 +296,7 @@ if selectRB == "Insurance Penetration":
             st.pyplot(fig)
 
         if st.checkbox("Total Insurance Amount vs Year"):
-            df = td.getTotalAmountByYear()
+            df = ip.getTotalAmountByYear()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -318,9 +318,9 @@ if selectRB == "User Engagement":
     col1,col2= st.columns([3,1])
     with col1:
         st.subheader("User Engagement and Growth Strategy")
-        td = UserEngagement()
+        ue = UserEngagement()
         if st.checkbox("Show total Registered Users By State level"):
-            df = td.getTotalRegisteredUsersByState()
+            df = ue.getTotalRegisteredUsersByState()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -334,32 +334,33 @@ if selectRB == "User Engagement":
             ax.invert_yaxis()
             st.pyplot(fig)
         if st.checkbox("Show total Registered Users ByYear-Quarter wise"):
-            df = td.getRegisteredUsersByQuarterly()
+            df = ue.getRegisteredUsersByQuarterly()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
 
         if st.checkbox("Show total Registered Users for Each State by Quarter wise"):
-            df = td.getRegisteredUsersByQuarterlyStateLevel()
+            df = ue.getRegisteredUsersByQuarterlyStateLevel()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
 
         if st.checkbox("Total Average App Opens By State Level"):
-                    df = td.getAverageAppOpensByState()
-                    if df.empty:
-                        st.warning("No Data available to display")
-                    st.dataframe(df)
+            df = ue.getAverageAppOpensByState()
+            if df.empty:
+                st.warning("No Data available to display")
+            st.dataframe(df)
+                   
         
         if st.checkbox("Total Average App Opens By Region"):
-                    df = td.getAverageAppOpensByRegion()
-                    if df.empty:
-                        st.warning("No Data available to display")
-                    st.dataframe(df)
+            df = ue.getAverageAppOpensByRegion()
+            if df.empty:
+                st.warning("No Data available to display")
+            st.dataframe(df)
     
     with col2:
         if st.checkbox("Total Registered Users vs Year"):
-            df = td.getRegisteredUsersByYearly()
+            df = ue.getRegisteredUsersByYearly()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
@@ -379,7 +380,7 @@ if selectRB == "User Engagement":
             st.pyplot(fig)
 
         if st.checkbox("Total App Opens By State Level"):
-            df = td.getTotalAppOpensByState()
+            df = ue.getTotalAppOpensByState()
             if df.empty:
                 st.warning("No Data available to display")
             st.dataframe(df)
