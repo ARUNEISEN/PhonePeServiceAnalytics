@@ -64,23 +64,22 @@ class TransactionDynamics:
                     ORDER BY "Total_Amount" DESC;'''
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        df = pd.DataFrame(rows, columns=['Transaction_type',"Total_Transactions"])
+        df = pd.DataFrame(rows, columns=['Transaction_type',"Total_Amount"])
         return df
     
-    def getTopFiveStatesByTotalTransactions(self):
-        query = '''SELECT "State",SUM("Transaction_count") AS "Total_transactions",
-                ROUND(SUM("Transaction_amount")::NUMERIC, 2) AS "Total_Amount"
+    def getTopStatesByTotalTransactions(self):
+        query = '''SELECT "State",SUM("Transaction_count") AS "Total_transactions"
                 FROM "Aggregated_transaction"
                 GROUP BY "State"
                 ORDER BY "Total_transactions" DESC
                 LIMIT 5;'''
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        df = pd.DataFrame(rows, columns=['State', 'Total_Transactions','Total_Amount'])
+        df = pd.DataFrame(rows, columns=['State', 'Total_Transactions'])
         return df
 
-    def getTopFiveStatesByTotalAmount(self):
-        query = '''SELECT "State",SUM("Transaction_count") AS "Total_transactions",
+    def getTopStatesByTotalAmount(self):
+        query = '''SELECT "State",
                 ROUND(SUM("Transaction_amount")::NUMERIC, 2) AS "Total_Amount"
                 FROM "Aggregated_transaction"
                 GROUP BY "State"
@@ -88,7 +87,7 @@ class TransactionDynamics:
                 LIMIT 5;'''
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        df = pd.DataFrame(rows, columns=['State', 'Total_Transactions','Total_Amount'])
+        df = pd.DataFrame(rows, columns=['State', 'Total_Amount'])
         return df
 
     def getTransactionTypeByPercantage(self):

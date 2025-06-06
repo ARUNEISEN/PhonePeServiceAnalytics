@@ -80,7 +80,7 @@ class UserEngagement:
         return df
 
     #Year-over-Year growth of registered users by state
-    def getRegisteredUsersByQuarterly(self):
+    def getRegisteredUsersByQuarterlyStateLevel(self):
         query = '''select 
                              "State", "Year",
                               sum("Registered_Users_count") as "Total_Users"

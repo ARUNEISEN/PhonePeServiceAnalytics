@@ -78,16 +78,6 @@ class DeviceDominance:
         df = pd.DataFrame(rows, columns = ['State', 'TotalRegisteredUsers'])
         return df
 
-    def getTotalUserPercentageByState(self):
-        query = '''SELECT "State", SUM("User_countU") AS "TotalRegisteredUsers"
-                   FROM "Aggregated_user"
-                   GROUP BY "State"
-                   ORDER BY "TotalRegisteredUsers" DESC '''
-        self.cursor.execute(query)
-        rows = self.cursor.fetchall()
-        df = pd.DataFrame(rows, columns = ['State', 'TotalRegisteredUsers'])
-        return df
-
     def getUserPercentageByState(self):
         query = '''SELECT "State",
                         SUM("User_count") AS "Total_User",

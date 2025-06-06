@@ -1,0 +1,33 @@
+import streamlit as st
+import plotly.express as px
+import pandas as pd
+
+
+st.set_page_config(page_title="Phonpe Transaction Dynamic", layout="wide")
+
+st.title("PhonePe Pulse Dashboard")
+
+st.sidebar.header("PhonePe Analysis Sections")
+
+st.sidebar.radio(
+    "Business Case Studies",
+    options = 
+    ["Transaction Dynamics",
+    "Device Dominance",
+    "Insurance Penetration",
+    "User Engagement",
+    "Insurance Engagement"
+    ]
+)
+st.header("(a+b)2 = a^2 + b^2 + 2ab")
+st.subheader("(a+b)2 = a^2 + b^2 + 2ab")
+st.title("(a+b)2 = a^2 + b^2 + 2ab")
+st.latex("(a+b)2 = a^2 + b^2 + 2ab")
+st.text("(a+b)2 = a^2 + b^2 + 2ab")
+st.caption("(a+b)2 = a^2 + b^2 + 2ab")
+
+st.code('''
+        def  printGivenText(self,text):
+            print(text)'''
+        ,language='Python'
+        )

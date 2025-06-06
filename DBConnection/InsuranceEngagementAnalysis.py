@@ -25,7 +25,7 @@ class InsuranceEngagementAnalysis:
                     order by "Total_Transactions" desc'''
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        df = pd.DataFrame(rows, columns = ['State', 'Total_Users'])
+        df = pd.DataFrame(rows, columns = ['State', 'Total_Transactions'])
         return df
     
 
@@ -41,7 +41,7 @@ class InsuranceEngagementAnalysis:
         df = pd.DataFrame(rows, columns = ["Year", "Quarter",'Total_Transactions'])
         return df
     
-    def geTotalTransactionsByYearly(self):
+    def getTotalTransactionsByYearly(self):
         query = '''select 
                         "Year",
                         sum("Transaction_count") as "Total_Transactions"
@@ -50,7 +50,7 @@ class InsuranceEngagementAnalysis:
                         order by "Total_Transactions" desc'''
         self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        df = pd.DataFrame(rows, columns = ["Year",'Total_Users'])
+        df = pd.DataFrame(rows, columns = ["Year",'Total_Transactions'])
         return df
 
     def getTotalAmountByState(self):
@@ -80,7 +80,7 @@ class InsuranceEngagementAnalysis:
         return df
 
     #Year-over-Year growth of registered users by state
-    def getTotalTransactionsByYearly(self):
+    def getTotalTransactionsByYearlyForState(self):
         query = '''select 
                              "State", "Year",
                               sum("Transaction_count") as "Total_Transactions"
