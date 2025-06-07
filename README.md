@@ -153,5 +153,6 @@
     streamlit application created to display the results as Dashboard with Barcharts, Tables, Piecarts.
 
 ## Sample Screenshot
-     ![alt text](image.png)    
+![image](https://github.com/user-attachments/assets/215432d3-1893-4cb6-a452-471b2a7449d9)
+
    
