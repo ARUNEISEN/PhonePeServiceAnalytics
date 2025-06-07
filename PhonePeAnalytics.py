@@ -2,6 +2,8 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import matplotlib.pyplot as plt
+import requests
+import plotly.graph_objects as go
 
 
 from DBConnection.TransactionDynamics import TransactionDynamics
@@ -19,13 +21,167 @@ st.sidebar.header("PhonePe Analysis Sections")
 selectRB = st.sidebar.radio(
     "Business Case Studies",
     options = 
-    ["Transaction Dynamics",
+    ["Home",
+    "Transaction Dynamics",
     "Device Dominance",
     "Insurance Penetration",
     "User Engagement",
     "Insurance Engagement"
     ]
 )
+
+state_name_mapping = {
+                "Andaman-&-Nicobar-Islands": "Andaman & Nicobar",
+                "Andhra-Pradesh":"Andhra Pradesh",
+                "Arunachal-Pradesh": "Arunanchal Pradesh",
+                "Dadra-&-Nagar-Haveli-&-Daman-&-Diu":"Dadra and Nagar Haveli and Daman and Diu",
+                "Himachal-Pradesh":"Himachal Pradesh",
+                "Jammu-&-Kashmir":"Jammu & Kashmir",
+                "Madhya-Pradesh":"Madhya Pradesh",
+                "Tamil-Nadu":"Tamil Nadu",
+                "Uttar-Pradesh":"Uttar Pradesh",
+                "West-Bengal":"West Bengal"
+                # Add more if needed based on your debug output
+            }
+
+@st.cache_data
+def load_geojson():
+    url = "https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson"
+    return requests.get(url).json()
+
+if selectRB == "Home":
+    select = st.radio(
+    "Main Tabs",
+    options = 
+    ["PhonePe Transactions - Statewise Map",
+    "Insurance Transactions - Statewise Map",
+    "Registered Users - Statewise Map" ])
+    if select == "PhonePe Transactions - Statewise Map":
+        col1,col2= st.columns([3,1])
+        with col1:
+            df = TransactionDynamics().getTotalTransactionsByState()
+            st.subheader("PhonePe Transactions - Statewise Map")
+            df["State"] = df["State"].str.title().str.strip()
+
+            # Load GeoJSON
+            geojson_data = load_geojson()
+
+            # Extract GeoJSON state names]
+
+            # Show both for debugging
+            
+
+            df["State"] = df["State"].replace(state_name_mapping)
+
+            fig = go.Figure(data=go.Choropleth(
+                geojson=geojson_data,
+                featureidkey='properties.ST_NM',
+                locations=df['State'],
+                z=df['Total_transactions'],
+                zmin=0,
+                zmax=df['Total_transactions'].max(),
+                colorscale='sunsetdark',
+                marker_line_color='white',
+                colorbar_title="Total Transactions"
+            ))
+
+            fig.update_geos(
+                visible=False,
+                projection=dict(type='conic conformal'),
+                lonaxis=dict(range=[68, 98]),
+                lataxis=dict(range=[6, 38])
+            )
+
+            fig.update_layout(
+                margin=dict(r=0, t=30, l=0, b=0),
+                height=600,
+                title="Total Transactions by State (India)"
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+        with col2:
+            st.dataframe(df)
+    if select == "Insurance Transactions - Statewise Map":
+        col1,col2= st.columns([3,1])
+        with col1:
+            df = InsurancePenetration().getTotalTransactionsByState()
+            st.subheader("Insurance Transactions - Statewise Map")
+            df["State"] = df["State"].str.title().str.strip()
+
+            # Load GeoJSON
+            geojson_data = load_geojson()
+
+            df["State"] = df["State"].replace(state_name_mapping)
+
+            fig = go.Figure(data=go.Choropleth(
+                geojson=geojson_data,
+                featureidkey='properties.ST_NM',
+                locations=df['State'],
+                z=df['Total_Transactions'],
+                zmin=0,
+                zmax=df['Total_Transactions'].max(),
+                colorscale='aggrnyl',
+                marker_line_color='white',
+                colorbar_title="Total Transactions"
+            ))
+
+            fig.update_geos(
+                visible=False,
+                projection=dict(type='conic conformal'),
+                lonaxis=dict(range=[68, 98]),
+                lataxis=dict(range=[6, 38])
+            )
+
+            fig.update_layout(
+                margin=dict(r=0, t=30, l=0, b=0),
+                height=600,
+                title="Total Insurance Transactions by State (India)"
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+        with col2:
+            st.dataframe(df)
+    if select == "Registered Users - Statewise Map":
+        col1,col2= st.columns([3,1])
+        with col1:
+            df = DeviceDominance().getTotalUserCountByState()
+            st.subheader("Registered Users - Statewise Map")
+            df["State"] = df["State"].str.title().str.strip()
+
+            # Load GeoJSON
+            geojson_data = load_geojson()
+
+            df["State"] = df["State"].replace(state_name_mapping)
+
+            fig = go.Figure(data=go.Choropleth(
+                geojson=geojson_data,
+                featureidkey='properties.ST_NM',
+                locations=df['State'],
+                z=df['TotalRegisteredUsers'],
+                zmin=0,
+                zmax=df['TotalRegisteredUsers'].max(),
+                colorscale='tealrose',
+                marker_line_color='white',
+                colorbar_title="Total Transactions"
+            ))
+
+            fig.update_geos(
+                visible=False,
+                projection=dict(type='conic conformal'),
+                lonaxis=dict(range=[68, 98]),
+                lataxis=dict(range=[6, 38])
+            )
+
+            fig.update_layout(
+                margin=dict(r=0, t=30, l=0, b=0),
+                height=600,
+                title="Total Registered Users by State (India)"
+            )
+
+            st.plotly_chart(fig, use_container_width=True)
+        with col2:
+            st.dataframe(df)
+
 
 if selectRB == "Transaction Dynamics":
 
@@ -146,9 +302,8 @@ if selectRB == "Transaction Dynamics":
                 startangle=90,
                 colors=plt.cm.Pastel1.colors,
              )
-            ax.set_titl("Amount vs TransactionType")
+            ax.set_title("Amount vs TransactionType")
             ax.axis('equal')
-
             st.pyplot(fig)
 if selectRB == "Device Dominance":
     
